@@ -5,6 +5,7 @@ gi.require_version('Notify', '0.7')
 from gi.repository import Notify
 Notify.init("Pypom")
 
+#countdown code
 def countdown(t):
     t = t*60
     while t:
@@ -14,23 +15,42 @@ def countdown(t):
         time.sleep(1)
         t -= 1
 
+
+#click methodology
 @click.command()
 @click.option('-wt', default=25, help='Work time in minutes')
 @click.option('-rt', default=5, help='Rest time in minutes')
-@click.option('-ert', default=15, help='Extended rest time in minutes')
-@click.option('-c', default=1, help='Cycle amount (one cycle is an hour and 40 mins)')
-def timer(wt, rt, ert, c):    
+@click.option('-lrt', default=15, help='Long rest time in minutes')
+@click.option('-c', default=1, help='Cycle amount')
+def timer(wt, rt, lrt, c):
+    noti = Notify.Notification.new("")
+    noti.set_urgency(0)
+    ctemp = c
     while c:
-        Notify.Notification.new(countdown(wt)).show() 
-        countdown(rt)
-        Notify.Notification.new("Work Time!").show()
+        noti.update("cycle start")
+        noti.show()
         countdown(wt)
-        Notify.Notification.new("Break Time!").show()
+        noti.update("break")
+        noti.show()
         countdown(rt)
-        Notify.Notification.new("Work Time!").show()
+        noti.update("work")
+        noti.show()
         countdown(wt)
-        Notify.Notification.new("Big Break Time!").show()
-        countdown(ert)
+        noti.update("break")
+        noti.show()
+        countdown(rt)
+        noti.update("work")
+        noti.show()
+        countdown(wt)
+        noti.update("long break")
+        noti.show()
+        countdown(lrt)
+        noti.update("cycle complete")
+        noti.show()
+        c = c - 1
+    sum = wt+wt+wt+rt+rt+lrt
+    total = sum*ctemp
+    print("finished {0} cycles for a total of {1} minutes".format(ctemp,total))
 
 if __name__ == '__main__':
     timer()
