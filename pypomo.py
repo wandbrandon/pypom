@@ -15,7 +15,6 @@ def countdown(t):
         time.sleep(1)
         t -= 1
 
-
 #click methodology
 @click.command()
 @click.option('-wt', default=25, help='Work time in minutes')
