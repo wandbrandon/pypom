@@ -49,7 +49,10 @@ def timer(wt, rt, lrt, c):
         c = c - 1
     sum = wt+wt+wt+rt+rt+lrt
     total = sum*ctemp
-    print("finished {0} cycles for a total of {1} minutes".format(ctemp,total))
+    if ctemp == 1:
+        print("finished {0} cycle for a total of {1} minutes".format(ctemp,total))
+    else:
+        print("finished {0} cycles for a total of {1} minutes".format(ctemp,total))
 
 if __name__ == '__main__':
     timer()
